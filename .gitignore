@@ -1,0 +1,17 @@
+# 의존성 / 빌드 산출물
+node_modules/
+dist/
+
+# OS / 에디터
+Thumbs.db
+.DS_Store
+.vscode/
+.idea/
+
+# 임시 캡처/디버그
+shot.js
+shot*.png
+window.png
+screen.png
+*_preview.png
+.playwright-mcp/

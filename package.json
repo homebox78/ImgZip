@@ -1,0 +1,57 @@
+{
+  "name": "imgzip",
+  "version": "0.1.0",
+  "description": "이미집(ImgZip) - 올리기 좋게, 가볍게. 온라인 업로드용 이미지 최적화 데스크톱 도구",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win"
+  },
+  "author": "이미집",
+  "license": "MIT",
+  "build": {
+    "appId": "com.imgzip.app",
+    "productName": "이미집",
+    "copyright": "© 2026 이미집",
+    "artifactName": "이미집-설치-${version}.${ext}",
+    "win": {
+      "target": "nsis",
+      "icon": "icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "license": "license_ko.txt",
+      "language": "1042",
+      "installerLanguages": ["ko"],
+      "multiLanguageInstaller": false,
+      "installerIcon": "icon.ico",
+      "uninstallerIcon": "icon.ico",
+      "installerHeaderIcon": "icon.ico",
+      "installerSidebar": "installerSidebar.bmp",
+      "uninstallerSidebar": "installerSidebar.bmp",
+      "installerHeader": "installerHeader.bmp",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "menuCategory": false,
+      "shortcutName": "이미집",
+      "runAfterFinish": true,
+      "deleteAppDataOnUninstall": false,
+      "uninstallDisplayName": "이미집 ${version}"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "index.html",
+      "icon.png",
+      "icon.ico",
+      "fonts/**/*"
+    ]
+  },
+  "devDependencies": {
+    "electron": "^42.3.3",
+    "electron-builder": "^26.8.1"
+  }
+}
