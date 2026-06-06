@@ -1357,6 +1357,16 @@ renderPresets();
 syncAdvancedUI();
 updateSummary();
 
+// 데스크톱: 우클릭 "ImageZip으로 압축"/실행 인자로 넘어온 이미지 받기
+if(window.imgzip && window.imgzip.onAddFiles){
+  window.imgzip.onAddFiles(async (files)=>{
+    if(!files || !files.length) return;
+    const objs = files.map(f => new File([new Uint8Array(f.data)], f.name));
+    if(typeof hideWelcome==='function') hideWelcome();
+    await addFiles(objs);
+  });
+}
+
 // WebP 인코딩 지원 점검
 (function(){
   const c = document.createElement('canvas'); c.width=c.height=1;
