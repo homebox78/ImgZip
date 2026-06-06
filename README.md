@@ -2,6 +2,16 @@
 
 > 올리기 좋게, 가볍게 · 위치·기기정보는 쏙 빼고
 
+### ⬇ 다운로드 · 설치
+
+[![Windows 설치 파일 다운로드](https://img.shields.io/badge/⬇%20Windows%20설치파일%20다운로드-ImgZip%20Setup%20.exe-3fe0b0?style=for-the-badge&logo=windows)](https://github.com/homebox78/ImgZip/releases/latest/download/ImgZip-Setup-0.1.0.exe)
+
+위 버튼(또는 [최신 릴리스](https://github.com/homebox78/ImgZip/releases/latest))에서 **`ImgZip-Setup-0.1.0.exe`** 를 받아 더블클릭하면 설치됩니다. (Windows · 관리자 권한 불필요)
+
+> ⚠️ 코드 서명 전이라 첫 실행 시 Windows SmartScreen 경고가 나올 수 있어요 → **[추가 정보] → [실행]** 을 누르면 됩니다.
+
+---
+
 온라인 업로드용 **이미지 최적화 데스크톱 도구**입니다. 쇼핑몰 운영자, AI 이미지 생성 사용자, 디자이너·블로거가 **화질은 지키면서 용량만 확 줄여** 여러 장을 한 번에, 간단하게 처리할 수 있도록 만들었습니다.
 
 다크 톤 기반의 절제된 UI에 단일 민트 포인트 컬러를 사용했고, Electron으로 동작합니다.
