@@ -13,7 +13,7 @@
     "appId": "com.imgzip.app",
     "productName": "ImageZip",
     "copyright": "© 2026 ImageZip",
-    "artifactName": "ImageZip-설치-${version}.${ext}",
+    "artifactName": "ImageZip-Install-${version}.${ext}",
     "win": {
       "target": "nsis",
       "icon": "icon.ico"

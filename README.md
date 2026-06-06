@@ -4,9 +4,9 @@
 
 ### ⬇ 다운로드 · 설치
 
-[![Windows 설치 파일 다운로드](https://img.shields.io/badge/⬇%20Windows%20설치파일%20다운로드-ImgZip%20Setup%20.exe-3fe0b0?style=for-the-badge&logo=windows)](https://github.com/homebox78/ImgZip/releases/latest/download/ImgZip-Setup-0.1.0.exe)
+[![Windows 설치 파일 다운로드](https://img.shields.io/badge/⬇%20Windows%20설치파일%20다운로드-ImageZip%20Install%20.exe-3fe0b0?style=for-the-badge&logo=windows)](https://github.com/homebox78/ImgZip/releases/latest/download/ImageZip-Install-0.1.0.exe)
 
-위 버튼(또는 [최신 릴리스](https://github.com/homebox78/ImgZip/releases/latest))에서 **`ImgZip-Setup-0.1.0.exe`** 를 받아 더블클릭하면 설치됩니다. (Windows · 관리자 권한 불필요)
+위 버튼(또는 [최신 릴리스](https://github.com/homebox78/ImgZip/releases/latest))에서 **`ImageZip-Install-0.1.0.exe`** 를 받아 더블클릭하면 설치됩니다. (Windows · 관리자 권한 불필요)
 
 > ⚠️ 코드 서명 전이라 첫 실행 시 Windows SmartScreen 경고가 나올 수 있어요 → **[추가 정보] → [실행]** 을 누르면 됩니다.
 
@@ -54,7 +54,7 @@ npm start
 npm run dist
 ```
 
-`dist/ImageZip-설치-<버전>.exe` 가 생성됩니다 — 이용약관 동의 → 설치 폴더 선택 → 진행률 → 완료(실행)로 이어지는 정식 설치 마법사(NSIS) 입니다.
+`dist/ImageZip-Install-<버전>.exe` 가 생성됩니다 — 이용약관 동의 → 설치 폴더 선택 → 진행률 → 완료(실행)로 이어지는 정식 설치 마법사(NSIS) 입니다.
 
 ## 🛠 기술 스택
 
