@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>이미집 — 올리기 좋게, 가볍게</title>
+<title>ImageZip — 올리기 좋게, 가볍게</title>
 <style>
 /* Pretendard 로컬 내장 (오프라인/Electron 에서도 항상 또렷하게) */
 @font-face{
@@ -14,7 +14,7 @@
   src:url('fonts/PretendardVariable.woff2') format('woff2');
 }
 /* ============================================================
-   이미집 (ImgZip) — 다크 톤 이미지 최적화 도구 프로토타입
+   ImageZip (ImgZip) — 다크 톤 이미지 최적화 도구 프로토타입
    ============================================================ */
 :root{
   --bg:#0c0d10;
@@ -523,7 +523,7 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
         </svg>
       </div>
       <div>
-        <div class="brand-name">이미<b>집</b></div>
+        <div class="brand-name">Image<b>Zip</b></div>
         <div class="brand-sub">올리기 좋게, 가볍게 · <b>위치·기기정보는 쏙 빼고</b></div>
       </div>
     </div>
@@ -609,7 +609,7 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
         </div>
         <div class="field">
           <label>파일명 규칙</label>
-          <input class="inp" id="naming" value="{이름}_이미집">
+          <input class="inp" id="naming" value="{이름}_ImageZip">
           <div class="hint" id="namingPreview"></div>
         </div>
         <div class="field full toggle">
@@ -645,7 +645,7 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
   <div class="headline" id="resHeadline"></div>
   <div class="bars">
     <div class="bar-row"><span class="tag">원본</span><div class="bar-track"><div class="bar-fill orig" id="barOrig"></div></div><span class="amt" id="amtOrig"></span></div>
-    <div class="bar-row"><span class="tag">이미집</span><div class="bar-track"><div class="bar-fill out" id="barOut"></div></div><span class="amt" id="amtOut"></span></div>
+    <div class="bar-row"><span class="tag">ImageZip</span><div class="bar-track"><div class="bar-fill out" id="barOut"></div></div><span class="amt" id="amtOut"></span></div>
   </div>
   <div class="stat-row">
     <div class="stat"><div class="k">처리한 이미지</div><div class="v" id="statCount">0장</div></div>
@@ -664,7 +664,7 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
       저장하기
     </button>
   </div>
-  <div class="res-watermark">이미<b>집</b></div>
+  <div class="res-watermark">Image<b>Zip</b></div>
 </div>
 
 <!-- 화질 비교 미리보기 -->
@@ -679,10 +679,10 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
   </div>
   <div class="cmp-stage" id="cmpStage">
     <img class="cmp-img cmp-orig" id="cmpOrig" alt="원본">
-    <img class="cmp-img cmp-out" id="cmpOut" alt="이미집 결과">
+    <img class="cmp-img cmp-out" id="cmpOut" alt="ImageZip 결과">
     <div class="cmp-divider" id="cmpDivider"><div class="cmp-handle">⇆</div></div>
     <div class="cmp-tag cmp-tag-l">원본 <b id="cmpOrigInfo"></b></div>
-    <div class="cmp-tag cmp-tag-r">이미집 <b id="cmpOutInfo"></b></div>
+    <div class="cmp-tag cmp-tag-r">ImageZip <b id="cmpOutInfo"></b></div>
   </div>
   <div class="cmp-foot">손잡이를 좌우로 끌어 원본과 압축본을 비교하세요</div>
 </div>
@@ -699,7 +699,7 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
     <div class="switch on" id="setNoOverwrite"></div>
   </div>
   <button class="sp-link" id="setShowWelcome">↺ 환영 안내 다시 보기</button>
-  <div class="sp-foot">이미집 <b>v0.1.0</b> · 올리기 좋게, 가볍게</div>
+  <div class="sp-foot">ImageZip <b>v0.1.0</b> · 올리기 좋게, 가볍게</div>
 </div>
 
 <!-- 첫 실행 환영 카드 (온보딩) -->
@@ -714,7 +714,7 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
       <defs><linearGradient id="wg" x1="3" y1="3" x2="21" y2="21"><stop stop-color="#5fe8c2"/><stop offset="1" stop-color="#1aa888"/></linearGradient></defs>
     </svg>
   </div>
-  <div class="wc-title">이미집에 오신 걸 환영해요</div>
+  <div class="wc-title">ImageZip에 오신 걸 환영해요</div>
   <div class="wc-sub">여러 장을 한 번에 넣어도, <b>이미지만 골라</b> 가볍게 만들어드려요</div>
   <div class="wc-steps">
     <div class="wc-step"><div class="wc-num">1</div><div class="wc-txt">이미지·폴더를<br>끌어다 놓기</div></div>
@@ -731,7 +731,7 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
 
 <script>
 /* ============================================================
-   이미집 — 동작 로직
+   ImageZip — 동작 로직
    ============================================================ */
 const $ = s => document.querySelector(s);
 
@@ -763,7 +763,7 @@ const PLATFORMS = [
 let images = [];        // {file, url, w, h, origSize, blob, outName, outSize}
 let lastSaveDir = null;  // 마지막 저장 폴더 (데스크톱)
 let activePreset = 'shop';
-let settings = { maxw:1280, fmt:'webp', q:85, exif:true, naming:'{이름}_이미집' };
+let settings = { maxw:1280, fmt:'webp', q:85, exif:true, naming:'{이름}_ImageZip' };
 
 // ---- 유틸 ----
 const fmtBytes = b => {
@@ -857,11 +857,11 @@ function syncAdvancedUI(){
   updateNamingPreview();
 }
 
-// 파일명 규칙 결과 예시 ("사진.jpg → 사진_이미집.webp")
+// 파일명 규칙 결과 예시 ("사진.jpg → 사진_ImageZip.webp")
 function updateNamingPreview(){
   const el = $('#namingPreview'); if(!el) return;
   const base = '사진';
-  const out = (settings.naming || '{이름}_이미집').replace('{이름}', base).replace('{name}', base);
+  const out = (settings.naming || '{이름}_ImageZip').replace('{이름}', base).replace('{name}', base);
   let f = settings.fmt; if(f === 'keep') f = 'jpg';
   const e = ext(f) || 'jpg';
   el.innerHTML = `예: 사진.jpg → <b>${out}.${e}</b>`;
@@ -1299,7 +1299,7 @@ document.querySelectorAll('#fmtSeg button').forEach(b=> b.onclick=()=>{
   document.querySelectorAll('#fmtSeg button').forEach(x=>x.classList.remove('on'));
   b.classList.add('on'); settings.fmt=b.dataset.f; markCustom(); updateSummary(); updateNamingPreview();
 });
-$('#naming').oninput = e=>{ settings.naming = e.target.value || '{이름}_이미집'; updateNamingPreview(); };
+$('#naming').oninput = e=>{ settings.naming = e.target.value || '{이름}_ImageZip'; updateNamingPreview(); };
 $('#exifSwitch').onclick = function(){ this.classList.toggle('on'); settings.exif=this.classList.contains('on'); };
 function markCustom(){ if(activePreset!=='custom'){ activePreset='custom'; renderPresets(); } }
 

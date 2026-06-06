@@ -1,19 +1,19 @@
 {
   "name": "imgzip",
   "version": "0.1.0",
-  "description": "이미집(ImgZip) - 올리기 좋게, 가볍게. 온라인 업로드용 이미지 최적화 데스크톱 도구",
+  "description": "ImageZip(ImgZip) - 올리기 좋게, 가볍게. 온라인 업로드용 이미지 최적화 데스크톱 도구",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "dist": "electron-builder --win"
   },
-  "author": "이미집",
+  "author": "ImageZip",
   "license": "MIT",
   "build": {
     "appId": "com.imgzip.app",
-    "productName": "이미집",
-    "copyright": "© 2026 이미집",
-    "artifactName": "이미집-설치-${version}.${ext}",
+    "productName": "ImageZip",
+    "copyright": "© 2026 ImageZip",
+    "artifactName": "ImageZip-설치-${version}.${ext}",
     "win": {
       "target": "nsis",
       "icon": "icon.ico"
@@ -36,10 +36,10 @@
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "menuCategory": false,
-      "shortcutName": "이미집",
+      "shortcutName": "ImageZip",
       "runAfterFinish": true,
       "deleteAppDataOnUninstall": false,
-      "uninstallDisplayName": "이미집 ${version}"
+      "uninstallDisplayName": "ImageZip ${version}"
     },
     "files": [
       "main.js",

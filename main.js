@@ -1,4 +1,4 @@
-// 이미집 — Electron 메인 프로세스
+// ImageZip — Electron 메인 프로세스
 const { app, BrowserWindow, ipcMain, dialog, shell, Menu } = require('electron');
 const fs = require('fs/promises');
 const path = require('path');
@@ -10,7 +10,7 @@ function createWindow() {
     minWidth: 720,
     minHeight: 600,
     backgroundColor: '#0c0d10',
-    title: '이미집',
+    title: 'ImageZip',
     autoHideMenuBar: true,
     icon: path.join(__dirname, 'icon.png'), // 없으면 기본 아이콘 사용
     webPreferences: {
