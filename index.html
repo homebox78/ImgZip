@@ -272,8 +272,14 @@ body{
 .field.full{grid-column:1/-1}
 .field label{font-size:12.5px;color:var(--text-dim);font-weight:600;display:flex;justify-content:space-between}
 .field label .val{color:var(--accent);font-weight:700}
-.field .hint{font-size:11.5px;color:var(--text-faint);margin-top:-2px}
+.field .hint{font-size:11.5px;color:var(--text-faint);margin-top:1px}
 .field .hint b{color:var(--accent);font-weight:600}
+.field .vars{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.field .varchip{display:inline-flex;align-items:baseline;gap:5px;cursor:pointer;font-family:inherit;
+  background:var(--surface-3);border:1px solid var(--border);border-radius:8px;padding:5px 9px;
+  font-size:11.5px;font-weight:600;color:var(--accent);transition:.18s var(--ease)}
+.field .varchip i{font-style:normal;color:var(--text-faint);font-weight:400;font-size:10.5px}
+.field .varchip:hover{border-color:var(--accent);background:rgba(63,224,176,.1)}
 input[type=range]{-webkit-appearance:none;appearance:none;height:5px;border-radius:99px;
   background:var(--surface-3);outline:none;cursor:pointer}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;
@@ -610,6 +616,12 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
         <div class="field">
           <label>파일명 규칙</label>
           <input class="inp" id="naming" value="{이름}_ImageZip">
+          <div class="vars" id="namingVars">
+            <button type="button" class="varchip" data-v="{이름}">{이름}<i>원본명</i></button>
+            <button type="button" class="varchip" data-v="{날짜}">{날짜}<i>20260606</i></button>
+            <button type="button" class="varchip" data-v="{번호}">{번호}<i>001</i></button>
+            <button type="button" class="varchip" data-v="{시간}">{시간}<i>1530</i></button>
+          </div>
           <div class="hint" id="namingPreview"></div>
         </div>
         <div class="field full toggle">
@@ -857,11 +869,26 @@ function syncAdvancedUI(){
   updateNamingPreview();
 }
 
+// 파일명 규칙에 변수 적용 ({이름}/{날짜}/{번호}/{시간} 및 영문 별칭)
+function buildNameFromRule(base, index){
+  const d = new Date();
+  const p = n => String(n).padStart(2,'0');
+  const date = `${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}`;
+  const time = `${p(d.getHours())}${p(d.getMinutes())}`;
+  const num = String((index|0)+1).padStart(3,'0');
+  let s = settings.naming || '{이름}_ImageZip';
+  s = s.replace(/\{이름\}/g, base).replace(/\{name\}/gi, base)
+       .replace(/\{날짜\}/g, date).replace(/\{date\}/gi, date)
+       .replace(/\{번호\}/g, num).replace(/\{n\}/gi, num)
+       .replace(/\{시간\}/g, time).replace(/\{time\}/gi, time);
+  if(!s.trim()) s = base + '_ImageZip';
+  return s;
+}
 // 파일명 규칙 결과 예시 ("사진.jpg → 사진_ImageZip.webp")
 function updateNamingPreview(){
   const el = $('#namingPreview'); if(!el) return;
   const base = '사진';
-  const out = (settings.naming || '{이름}_ImageZip').replace('{이름}', base).replace('{name}', base);
+  const out = buildNameFromRule(base, 0);
   let f = settings.fmt; if(f === 'keep') f = 'jpg';
   const e = ext(f) || 'jpg';
   el.innerHTML = `예: 사진.jpg → <b>${out}.${e}</b>`;
@@ -1017,7 +1044,7 @@ function updateSummary(){
 }
 
 // ---- 핵심: 압축 ----
-async function compressOne(im){
+async function compressOne(im, index){
   const bitmap = await createImageBitmap(im.file);
   let w = bitmap.width, h = bitmap.height;
   if(settings.maxw && w > settings.maxw){ h = Math.round(h*settings.maxw/w); w = settings.maxw; }
@@ -1032,7 +1059,7 @@ async function compressOne(im){
   const mime = fmt==='png'?'image/png':fmt==='webp'?'image/webp':'image/jpeg';
   const blob = await new Promise(r=> cv.toBlob(r, mime, settings.q/100));
   const base = im.file.name.replace(/\.[^.]+$/,'');
-  const outName = settings.naming.replace('{이름}', base).replace('{name}', base) + '.' + ext(fmt);
+  const outName = buildNameFromRule(base, index||0) + '.' + ext(fmt);
   return { blob, outName, w, h };
 }
 
@@ -1045,15 +1072,16 @@ async function runCompress(){
   let done = 0, okCount = 0, errCount = 0, keptCount = 0;
   processing = true; cancelRequested = false;
   go.classList.add('cancelable');   // 처리 중엔 클릭 시 취소
-  for(const im of targets){
+  for(let idx=0; idx<targets.length; idx++){
+    const im = targets[idx];
     if(cancelRequested) break;
     try{
-      const r = await compressOne(im);
+      const r = await compressOne(im, idx);
       if(r.blob.size >= im.origSize){
-        // 이미 충분히 가벼움 → 원본을 그대로 유지 (정직)
+        // 이미 충분히 가벼움 → 원본을 그대로 유지 (정직, 파일명 규칙은 적용)
         const base = im.file.name.replace(/\.[^.]+$/,'');
         const e = (im.file.name.split('.').pop()||'jpg');
-        im.blob = im.file; im.outSize = im.origSize; im.outName = `${base}.${e}`;
+        im.blob = im.file; im.outSize = im.origSize; im.outName = `${buildNameFromRule(base, idx)}.${e}`;
         im.kept = true; im.error = false;
         keptCount++;
       } else {
@@ -1300,6 +1328,16 @@ document.querySelectorAll('#fmtSeg button').forEach(b=> b.onclick=()=>{
   b.classList.add('on'); settings.fmt=b.dataset.f; markCustom(); updateSummary(); updateNamingPreview();
 });
 $('#naming').oninput = e=>{ settings.naming = e.target.value || '{이름}_ImageZip'; updateNamingPreview(); };
+// 변수 칩 클릭 → 커서 위치에 변수 삽입
+document.querySelectorAll('#namingVars .varchip').forEach(b=>{
+  b.onclick = ()=>{
+    const inp = $('#naming'); const v = b.dataset.v;
+    const s = inp.selectionStart ?? inp.value.length, en = inp.selectionEnd ?? inp.value.length;
+    inp.value = inp.value.slice(0,s) + v + inp.value.slice(en);
+    inp.focus(); inp.selectionStart = inp.selectionEnd = s + v.length;
+    settings.naming = inp.value; updateNamingPreview();
+  };
+});
 $('#exifSwitch').onclick = function(){ this.classList.toggle('on'); settings.exif=this.classList.contains('on'); };
 function markCustom(){ if(activePreset!=='custom'){ activePreset='custom'; renderPresets(); } }
 
